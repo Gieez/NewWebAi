@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             resultUmur.innerHTML = '<p class="loading">Sedang mencari fakta menarik...</p>';
 
-            const response = await fetch('http://localhost:3000/api/fakta', {
+            const response = await fetch('/api/fakta', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
