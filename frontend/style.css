@@ -267,3 +267,73 @@ select.input-text {
         width: 100%;
     }
 }
+
+/* Mode tabs styling */
+.mode-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+    background: var(--secondary-gradient);
+    color: var(--text-primary);
+    border: none;
+}
+
+/* Name section styling */
+.name-section {
+    margin-bottom: 1.5rem;
+}
+
+/* Results styling */
+.roast-title {
+    font-weight: 600;
+    color: #3b82f6;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.roast-content {
+    white-space: pre-line;
+}
+
+/* Responsive adjustments for mode tabs */
+@media (max-width: 768px) {
+    .mode-tabs {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .tab-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mode-tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .tab-button {
+        width: 100%;
+        text-align: center;
+    }
+}
