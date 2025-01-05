@@ -17,15 +17,20 @@ if (!process.env.GROQ_API_KEY) {
     process.exit(1);
 }
 
+console.log("GROQ_API_KEY:", process.env.GROQ_API_KEY); // Menambahkan log untuk memeriksa nilai GROQ_API_KEY
+
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
+
 
 // Inisialisasi Gemini
 if (!process.env.GEMINI_API_KEY) {
     console.error('ERROR: GEMINI_API_KEY tidak ditemukan di file .env');
     process.exit(1);
 }
+
+console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY); // Menambahkan log untuk memeriksa nilai GEMINI_API_KEY
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -85,25 +90,35 @@ app.post('/api/roast', async (req, res) => {
             return res.status(400).json({ error: 'Nama harus diisi untuk di-roast.' });
         }
 
-        const prompt = `roastinglah ${nama} dalam bahasa gaul dan singkat. tanpa memberikan penjelasan,disclaimer.`;
+        const prompt = `Roasting si ${nama} dong dalam bahasa gaul, yang kasar, dan nyelekit,tambahkan sedikit emote untuk membumbui. Tanpa memberikan penjelasan atau disclaimer dan roastingnya jangan yang sama sama mulu.`;
 
         console.log('Mengirim prompt untuk roasting:', prompt);
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-exp-0827' });
+        // Dapatkan model Gemini dengan konfigurasi yang diinginkan
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash",
+            generationConfig: {
+                temperature: 1.2,
+            }
+        });
+
+        // Generate konten
         const result = await model.generateContent(prompt);
-        const roastingText = result.response.text();
+        const response = await result.response;
+        const roastingText = response.text();
 
         res.json({
-            roast: roastingText || "Maaf, tidak dapat memberikan roasting saat ini. 🥲"
+            roast: roastingText,
         });
     } catch (error) {
         console.error('Error detail:', error);
         res.status(500).json({
             error: 'Terjadi kesalahan saat memproses permintaan.',
-            detail: error.message
+            detail: error.message,
         });
     }
 });
+
 
 function getBulanNama(bulanNumber) {
     const bulanNames = [
@@ -122,6 +137,8 @@ if (process.env.NODE_ENV !== 'production') {
         console.log(`API Key Gemini tersedia: ${!!process.env.GEMINI_API_KEY}`);
     });
 }
+
+
 
 // Untuk Vercel
 export default app;

@@ -61,27 +61,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to make API calls with better error handling
     async function makeApiCall(endpoint, data) {
         try {
-            console.log(`Making API call to: ${API_BASE_URL}${endpoint}`); // Debug log
             const response = await fetch(`${API_BASE_URL}${endpoint}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                const errorData = await response.json();
+                console.error(`Error: ${errorData.error}`); // Log error API
+                throw new Error(errorData.error || 'Terjadi kesalahan saat memproses permintaan.');
             }
 
             const result = await response.json();
             return result;
         } catch (error) {
-            console.error(`Error calling ${endpoint}:`, error);
+            console.error('Error calling API:', error);
             throw new Error(`Gagal menghubungi server: ${error.message}`);
         }
     }
+
 
     // Generate button click handler
     tombol.addEventListener("click", async () => {
