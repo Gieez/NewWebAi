@@ -90,7 +90,7 @@ app.post('/api/roast', async (req, res) => {
             return res.status(400).json({ error: 'Nama harus diisi untuk di-roast.' });
         }
 
-        const prompt = `Roasting si ${nama} dong dalam bahasa gaul, yang kasar, dan nyelekit,tambahkan sedikit emote untuk membumbui. Tanpa memberikan penjelasan atau disclaimer dan roastingnya jangan yang sama sama mulu.`;
+        const prompt = `Roasting si ${nama} dong dalam bahasa gaul, yang kasar, dan nyelekit,tambahkan sedikit emote. Tanpa memberikan penjelasan atau disclaimer dan roastingnya jangan yang sama sama mulu.`;
 
         console.log('Mengirim prompt untuk roasting:', prompt);
 
